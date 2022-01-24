@@ -61,7 +61,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-// 'with' keyword is used as a "mix-in" ie to inherite some features of a class without inheriting
+// 'with' keyword is used as a "mix-in" ie to inherit some features of a class without inheriting
 // the whole class.
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _userTransaction = [
@@ -76,19 +76,21 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
     super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+    
   }
 
-  didChangeLifeCycleState(AppLifecycleState state) {
+  @override
+  didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
     print(state);
   }
 
-
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
+    WidgetsBinding.instance!.removeObserver(this);
   }
 
   List<Transaction> get _recentTransactions {
@@ -100,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void _addNewTransactions(
       String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
-      id: txTitle.toString(),
+      id: chosenDate.toString(),
       title: txTitle,
       amount: txAmount,
       date: chosenDate,
